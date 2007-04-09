@@ -1,24 +1,15 @@
+require 'plugin'
 require 'rexml/document'
 require 'rexml_extensions'
-require 'plugin'
 
 module AjaxyXml
 
-  class AjaxyXmlError < StandardError
-  end
+  class AjaxyXmlError < StandardError; end
 
-  # Route for ajax request. See README for instructions.
-  class << self
-    def connect_with(map)
-      map.ajaxyxml '/ajaxyxml.html', :controller => 'ajaxyxml'
-    end
-  end
-
-  # Liquid Block for an Ajax Request. See README for syntax.
+  # Liquid Tag for an Ajax Request. See README for syntax.
   class RequestTag < Liquid::Tag
     Syntax = /((#{Liquid::TagAttributes}\s?,?\s?)*)/
 
-    # Initialize class instance and parse passed options.
     def initialize(tag, parms, tokens)
       super
       if parms =~ Syntax
