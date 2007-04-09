@@ -1,5 +1,6 @@
 require 'rexml/document'
 require 'rexml_extensions'
+require 'plugin'
 
 module AjaxyXml
 

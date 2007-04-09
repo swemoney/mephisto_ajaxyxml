@@ -1,57 +1,73 @@
 AjaxyXml Plugin for Mephisto
 ============================
 
-This plugin provides a liquid block for use with Mephisto that inserts and Ajax call into your
-blog that will fetch an XML file and parse it for you. The benefit of this is that you can put
-dynamic content on your blog without having to worry about your caches. You also don't have to
-worry about an external XML file slowing down your blogs loading time if the server it's on is
-slow or down at the moment.
+This plugin provides a liquid tag for use with Mephisto that inserts an Ajax 
+call into your blog that will fetch an XML file and parse it for you. The 
+benefit of this is that you can put dynamic content on your blog without 
+having to worry about your caches. You also don't have to worry about an 
+external XML file slowing down your blogs loading time if the server it's on 
+is slow or down at the moment.
 
 Installation
 ============
 
-To install this plugin, follow these steps. First, make sure your in the root of mephisto.
+You have 2 options for installation that depend on what version of mephisto
+your running. If your using the latest SVN version, use these instructions.
 
-    script/plugin install -x http://svn.dnite.org/mephisto_ajaxyxml
+    script/plugin install -x http://svn.dnite.org/mephisto_ajaxyxml/trunk
 
-You don't need the -x if you don't want to add the plugin to your subversion externals.
+You don't need the -x if you don't want to add the plugin to your subversion 
+externals. That's all there is to installing on 'Edge Mephisto'.
+
+If your running the latest stable release of Mephisto, please do the following.
+
+    script/plugin install http://svn.dnite.org/mephisto_ajaxyxml/tags/0.1
+
 Next, you need to add the following line to your config/routes.rb. 
 
     AjaxyXml.connect_with map
 
-MAKE SURE THIS LINE IS ABOVE THE Mephisto::Routing.connect_with map LINE OR YOU'LL GET AN ERROR!
+MAKE SURE THIS LINE IS ABOVE THE Mephisto::Routing.connect_with map LINE OR 
+YOU'LL GET AN ERROR!
     
 Usage
 =====
 
-Using this plugin is quite easy. A URL and element ID are both required. The quantity is optional.
-All options are space delimited. You can stick as many spaces as you want between options, just 
-make sure the options themselves don't contain any spaces. If you leave off the quantity, AjaxyXml
-will just assume you want all items. This tag will only generate the Ajax request to update an 
-element. You will have to place the element you wish to update somewhere else on your blog yourself.
-I did this on purpose to give you more freedom about how to style and where to put the element.
+Using this plugin is quite easy. A URL and element ID are both required. The 
+quantity is optional. If you leave off the quantity, AjaxyXml will just assume 
+you want all items. This tag will only generate the Ajax request to update an 
+element. You will have to place the element you wish to update somewhere else 
+on your blog yourself. I did this on purpose to give you more freedom about 
+how to style and where to put the element.
 
-    {% ajaxyxml http://url.to/file.xml element_id quantity %}
-      <p>{{ ajaxyxml.index }} : {{ xml.key }}</p>
-    {% endajaxyxml %}
+    {% ajaxyxml url: 'http://url.to/file.xml', element: 'element_id', quantity: 10 %}
 
 A more real life example would be something like below (for twitter status)...
 
     <div id="twitter_status" class="some_class">Loading Twitter Status...</div>
-    {% ajaxyxml http://twitter.com/statuses/user_timeline/swemoney.xml twitter_status 1 %}
-      <p>Current Twitter Status: {{ xml.text }} set on {{ xml.created_at }}</p>
-    {% endajaxyxml %}
+    {% ajaxyxml url: 'http://twitter.com/statuses/user_timeline/swemoney.xml', element: 'twitter_status', quantity: 1 %}
 
 Or if you want to display Last.fm information on your blog...
 
     <div id="lastfm" class="lastfm_class">Loading Last.fm Inforation...</div>
-    {% ajaxyxml http://ws.audioscrobbler.com/1.0/user/tehdnite/recenttracks.xml lastfm 10 %}
-      <p>{{ ajaxyxml.index }} : {{ xml.artist }} - {{ xml.name }}</p>
-    {% endajaxyxml %}
+    {% ajaxyxml url: 'http://ws.audioscrobbler.com/1.0/user/tehdnite/recenttracks.xml', element: 'lastfm' %}
 
-As seen above, the liquid variable {{ xml }} contains the current item in the XML file. Also, if 
-you wish to use the current index, {{ ajaxyxml.index }} can give you that. HAVE FUN!!
+The above examples will embed an Ajax call to your blog. This Ajax request will
+be looking for a liquid partial file called _ajaxy_elementid.liquid. So lastly,
+we'll need to create that in our Admin/Design panel in Mephisto.
 
-If you have any problems with this plugin, please contact tehdnite at gmail or go to http://blog.dnite.org
+    _ajaxy_twitter_status.liquid
+    <p>Twitter Status: {{ xml.text }} created on {{ xml.created_at }}</p>
 
-(C) Steve 'dnite' Ehrenberg 2007 under an MIT licence. http://www.opensource.org/licenses/mit-license.php
+    _ajaxy_lastfm.liquid
+    <p>{{ ajaxyxml.index }} :: {{ xml.artist }} - {{ xml.name }}</p>
+
+As seen above, the liquid variable {{ xml }} contains the current item in the 
+XML file. Also, if you wish to use the current index, {{ ajaxyxml.index }} can 
+give you that. HAVE FUN!!
+
+If you have any problems with this plugin, please contact tehdnite at gmail or 
+go to http://blog.dnite.org
+
+(C) Steve 'dnite' Ehrenberg 2007 under an MIT licence. 
+http://www.opensource.org/licenses/mit-license.php
