@@ -1,6 +1,6 @@
 module Mephisto
   module Plugins
-    class AjaxyXml < Mephisto::Plugin
+    class Ajaxyxml < Mephisto::Plugin
       author  "Steve 'dnite' Ehrenberg"
       version "0.2"
       notes   "Create an AJAX request to update an element on your blog with dynamic content."
