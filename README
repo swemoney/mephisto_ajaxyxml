@@ -28,7 +28,8 @@ Next, you need to add the following line to your config/routes.rb.
     AjaxyXml.connect_with map
 
 MAKE SURE THIS LINE IS ABOVE THE Mephisto::Routing.connect_with map LINE OR 
-YOU'LL GET AN ERROR!
+YOU'LL GET AN ERROR! Also, you only need to do that last step if your using
+the 0.1 release. The latest trunk release doesn't require this step.
     
 Usage
 =====
