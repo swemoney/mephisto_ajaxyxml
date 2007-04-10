@@ -3,6 +3,7 @@ class AjaxyxmlController < ApplicationController
   
   layout nil
   session :off
+  unloadable
   
   def index
     # Set some variables from the URL
