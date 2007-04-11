@@ -22,7 +22,13 @@ module AjaxyXml
 
     # Render the Ajax.Request tag.
     def render(context)
-      output  = "<script type=\"text/javascript\">new Ajax.Request('/ajaxyxml.html?e=#{@options[:element]}"
+      output = "<script type=\"text/javascript\">"
+      unless @options[:framework] == 'mootools'
+        output += "new Ajax.Request('/ajaxyxml.html"
+      else
+        output += "new XHR( {onSuccess: function(resp){eval(resp);} } ).send('/ajaxyxml.html"
+      end
+      output += "?e=#{@options[:element]}"
       output += "&u=#{CGI.escape @options[:url]}"
       output += "&q=#{@options[:quantity]}" unless @options[:quantity].blank?
       output += "')</script>"
@@ -44,14 +50,13 @@ module AjaxyXml
   # Dirty work for making HTTP connection and getting the XML file.
   class XmlRequest < Array
     def initialize(url)
-      @url = URI.parse url
+      @url = URI.parse(url)
       get_xml
     end
 
     private
     def get_xml
-      resp = Net::HTTP.start(@url.host, @url.port) {|h| h.get @url.path}
-      xml = REXML::Document.new resp.body
+      xml = REXML::Document.new Net::HTTP.get(@url)
       xml.root.elements.each do |element|
         push element.to_hash(HashWithIndifferentAccess.new)
       end

@@ -19,6 +19,8 @@ class AjaxyxmlController < ApplicationController
     xml = AjaxyXml::XmlRequest.new(url)
     xml = xml[0, quantity] unless quantity.blank?
 
+    logger.info "DEBUG :: #{xml.to_yaml}"
+
     # Generate the HTML that will replace this element.
     xml.each_with_index do |item, index|
       context.stack do
