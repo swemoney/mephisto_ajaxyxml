@@ -31,7 +31,14 @@ module AjaxyXml
 
     # Render the Ajax.Request tag.
     def render(context)
-      output  = "<script type=\"text/javascript\">new Ajax.Request('/ajaxyxml.html?e=#{@options[:element]}"
+      output = "<script type=\"text/javascript\">"
+      unless @options[:framework] == 'mootools'
+        output += "new Ajax.Request('/ajaxyxml.html"
+      else
+        output += "Element.update = function(element, html){$(element).innerHTML = html.replace(new RegExp('(?:<script.*?>)((\\n|\\r|.)*?)(?:<\\/script>)', 'img'), '');return element;}\n"
+        output += "new XHR( {onSuccess: function(resp){eval(resp);} } ).send('/ajaxyxml.html"
+      end
+      output += "?e=#{@options[:element]}"
       output += "&u=#{CGI.escape @options[:url]}"
       output += "&q=#{@options[:quantity]}" unless @options[:quantity].blank?
       output += "')</script>"
