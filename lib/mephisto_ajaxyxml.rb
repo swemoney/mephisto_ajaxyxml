@@ -26,10 +26,7 @@ module AjaxyXml
       unless @options[:framework] == 'mootools'
         output += "new Ajax.Request('/ajaxyxml.html"
       else
-        output += "\nElement.update = function(element, html){\n"
-        output += "   $(element).innerHTML = html.replace(new RegExp('(?:<script.*?>)((\\n|\\r|.)*?)(?:<\\/script>)', 'img'), '');\n"
-        output += "   return element;\n"
-        output += "}\n"
+        output += "Element.update = function(element, html){$(element).innerHTML = html.replace(new RegExp('(?:<script.*?>)((\\n|\\r|.)*?)(?:<\\/script>)', 'img'), '');return element;}\n"
         output += "new XHR( {onSuccess: function(resp){eval(resp);} } ).send('/ajaxyxml.html"
       end
       output += "?e=#{@options[:element]}"
