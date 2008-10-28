@@ -1,0 +1,1 @@
+map.ajaxyxml '/ajaxyxml.html', :controller => 'ajaxyxml'
