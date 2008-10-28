@@ -1,6 +1,5 @@
 class AjaxyxmlController < ApplicationController
-  self.template_root = Mephisto::Plugin.view_paths[:ajaxyxml]
-  
+
   layout nil
   session :off
   unloadable
@@ -44,7 +43,7 @@ class AjaxyxmlController < ApplicationController
       rescue Exception => e          
         context.template.handle_error(e)
       end
-    end      
+    end
   end
 
 end

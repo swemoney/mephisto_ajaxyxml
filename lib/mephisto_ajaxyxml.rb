@@ -1,4 +1,3 @@
-require 'plugin'
 require 'rexml/document'
 require 'rexml_extensions'
 
