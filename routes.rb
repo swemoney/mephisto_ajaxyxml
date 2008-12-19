@@ -1,1 +1,1 @@
-map.ajaxyxml '/ajaxyxml.html', :controller => 'ajaxyxml'
+map.ajaxyxml '/ajaxyxml', :controller => 'ajaxyxml'

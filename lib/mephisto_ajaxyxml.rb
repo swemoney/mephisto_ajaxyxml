@@ -23,10 +23,10 @@ module AjaxyXml
     def render(context)
       output = "<script type=\"text/javascript\">"
       unless @options[:framework] == 'mootools'
-        output += "new Ajax.Request('/ajaxyxml.html"
+        output += "new Ajax.Request('/ajaxyxml"
       else
         output += "Element.update = function(element, html){$(element).innerHTML = html.replace(new RegExp('(?:<script.*?>)((\\n|\\r|.)*?)(?:<\\/script>)', 'img'), '');return element;}\n"
-        output += "new XHR( {onSuccess: function(resp){eval(resp);} } ).send('/ajaxyxml.html"
+        output += "new XHR( {onSuccess: function(resp){eval(resp);} } ).send('/ajaxyxml"
       end
       output += "?e=#{@options[:element]}"
       output += "&u=#{CGI.escape @options[:url]}"
